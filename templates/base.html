@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}CoDemy{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#E8FAEA]">
+
+    <!-- Navbar -->
+    <nav class="bg-[#05597D] px-6 py-4 shadow-md">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <!-- Left: Platform Name -->
+        <div class="flex items-center">
+          <span class="text-2xl font-bold text-white tracking-wide">CoDemy</span>
+        </div>
+
+        <!-- Middle: Navigation Links -->
+        <ul class="hidden md:flex space-x-8 text-gray-200 font-medium">
+          <li><a href="#" class="hover:text-white transition">Home</a></li>
+          <li><a href="#" class="hover:text-white transition">Materials</a></li>
+          <li><a href="#" class="hover:text-white transition">Courses</a></li>
+          <li><a href="#" class="hover:text-white transition">Guidelines</a></li>
+          <li><a href="#" class="hover:text-white transition">Notification</a></li>
+        </ul>
+
+        <!-- Right: Login/Register Button -->
+        <div>
+          <a href="#" class="bg-[#E8FAEA] text-black px-4 py-2 rounded hover:bg-white transition">
+            Login / Register
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    {% block content %}
+    <!-- Content goes here -->
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-[#05597D] text-white py-10 mt-10">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <!-- About Section -->
+          <div class="mb-6 md:mb-0 md:w-1/2">
+            <h2 class="text-xl font-semibold mb-2">CoDemy</h2>
+            <p class="text-gray-200">
+              CoDemy is a central hub for CSE students to find semester-wise materials, course guides, and career resources.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="md:w-1/2 flex justify-between">
+            <div>
+              <h3 class="font-semibold mb-2">Quick Links</h3>
+              <ul class="text-gray-200 space-y-1">
+                <li><a href="#" class="hover:text-white">Home</a></li>
+                <li><a href="#" class="hover:text-white">Materials</a></li>
+                <li><a href="#" class="hover:text-white">Courses</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2">Contact</h3>
+              <ul class="text-gray-200 space-y-1">
+                <li><a href="#" class="hover:text-white">Email</a></li>
+                <li><a href="#" class="hover:text-white">Facebook</a></li>
+                <li><a href="#" class="hover:text-white">Support</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="text-center text-gray-300 mt-8 text-sm">
+          © 2025 CoDemy. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
