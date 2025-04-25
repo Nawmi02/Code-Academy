@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CoDemy - Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes glow {
+      0% { box-shadow: 0 0 10px #a2d2ff, 0 0 20px #a2d2ff; }
+      50% { box-shadow: 0 0 20px #219ebc, 0 0 30px #219ebc; }
+      100% { box-shadow: 0 0 10px #a2d2ff, 0 0 20px #a2d2ff; }
+    }
+    .glow-effect {
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+  </style>
+
+  <script>
+    function handleRegister(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const semester = document.getElementById('semester').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+
+      if (password.length < 5) {
+        document.getElementById('errorMessage').innerText = "Password must be at least 5 characters.";
+      } else if (password !== confirmPassword) {
+        document.getElementById('errorMessage').innerText = "Passwords do not match. Please try again.";
+      } else {
+        showSuccessMessage();
+        setTimeout(function() {
+          window.location.href = "{% url 'home' %}";
+        }, 1500);
+      }
+    }
+
+    function showSuccessMessage() {
+      const popup = document.createElement('div');
+      popup.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-[#219ebc] text-white font-bold px-6 py-3 rounded-full shadow-lg z-50 animate-bounce";
+      popup.innerText = "Registered Successfully!";
+      document.body.appendChild(popup);
+
+      setTimeout(() => {
+        popup.remove();
+      }, 1500);
+    }
+  </script>
+</head>
+
+<body class="min-h-screen bg-cover bg-center relative text-white" style="background-image: url('{% static 'images/BG1.png' %}');">
+
+  <!-- Blur Overlay -->
+  <div class="absolute inset-0 bg-white/10 backdrop-blur-sm z-0"></div>
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center bg-[#001f3f] px-6 py-4 text-white relative z-10 shadow-md">
+    <div class="flex items-center space-x-3">
+      <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-10 w-auto">
+      <span class="text-2xl font-bold">CoDemy</span>
+    </div>
+  </header>
+
+  <!-- Glassy + Glow Register Form -->
+  <main class="flex-grow flex items-center justify-center relative z-10 px-4 py-10">
+    <div class="bg-white/10 backdrop-blur-lg text-white rounded-2xl p-8 shadow-2xl w-full max-w-md border border-white/20 glow-effect">
+      <h2 class="text-3xl font-bold mb-8 text-center">Create an Account</h2>
+
+      <form onsubmit="handleRegister(event)" class="space-y-6">
+
+        <div>
+          <label for="name" class="block mb-1 text-lg">Name</label>
+          <input id="name" type="text" placeholder="Enter your name" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+        </div>
+
+        <div>
+          <label for="semester" class="block mb-1 text-lg">Semester</label>
+          <input id="semester" type="text" placeholder="Enter your semester" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+        </div>
+
+        <div>
+          <label for="email" class="block mb-1 text-lg">Email</label>
+          <input id="email" type="email" placeholder="Enter your email" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+        </div>
+
+        <div>
+          <label for="password" class="block mb-1 text-lg">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          <p class="text-gray-300 text-sm mt-1">Minimum 5 characters</p>
+        </div>
+
+        <div>
+          <label for="confirm_password" class="block mb-1 text-lg">Confirm Password</label>
+          <input id="confirm_password" type="password" placeholder="Confirm your password" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+        </div>
+
+        <!-- Error Message -->
+        <p id="errorMessage" class="text-red-400 text-sm"></p>
+
+        <button type="submit" class="w-full bg-[#219ebc] text-white p-3 rounded-full font-bold hover:bg-black transition-all">
+          Register
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+</body>
+</html>

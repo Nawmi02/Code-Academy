@@ -18,10 +18,18 @@ from django.contrib import admin
 from django.urls import path,include
 from .import settings
 from django.conf.urls.static import static
+from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('', include('CoDemy.urls'))
+    path('', views.landingPage, name="landingPage"),
+    path('users/', include('User.urls')),
+    path('home/', include('CoDemy.urls')),
+    path('materials/', include('Materials.urls')),
+    path('courses/', include('Courses.urls')),
+    path('guidelines/', include('Guidelines.urls')),
+    path('notification/', include('Notification.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

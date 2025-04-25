@@ -1,10 +1,6 @@
 from django.shortcuts import render
-from .models import *
+from .models import Course
 
-# Create your views here.
-def Course(request):
-    course = Course.objects.all()
-    context = {'course': course}
-    return render('courses.html', context = context)
-    
-
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request, 'courses.html', {'courses': courses})
