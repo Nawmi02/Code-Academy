@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'CoDemy.apps.CodemyConfig',
     'Courses.apps.CoursesConfig',
+    'Guidelines.apps.GuidelinesConfig',
+    'Materials.apps.MaterialsConfig',
+    'Notification.apps.NotificationConfig',
+    'User.apps.UserConfig'
 ]
 
 MIDDLEWARE = [

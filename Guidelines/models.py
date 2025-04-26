@@ -1,15 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
 class Guideline(models.Model):
-    name = models.Foreignkey(Course,on_delete = models.CASCADE)
-    topic = models.Charfield(max_length = 100,null = True, blank = True)
-    text = models.Textfield(max_length = 100,null = True, blank = True)
-    time = models.TimeField (null = True, blank = True)
+    topic = models.CharField(max_length=200, null=True, blank=True)
+    video_link = models.URLField(max_length=500, null=True, blank=True) 
+    description = models.TextField(null=True, blank=True)  
 
-
-    def __str__(self):
-        return self.name
-     
-
+    def _str_(self):
+        return self.topic

@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CoDemy - Landing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-white text-white">
+
+    <!-- Navbar -->
+    <header class="bg-[#001f3f] px-6 py-4 flex justify-between items-center shadow-md z-10 relative">
+        <div class="flex items-center space-x-3">
+            <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-10 w-auto">
+            <span class="text-2xl font-bold">CoDemy</span>
+        </div>
+        <div>
+            <a href="{% url 'login' %}" class="bg-white text-[#001f3f] px-5 py-2 rounded-full font-semibold hover:bg-sky-400 hover:text-[#001f3f] transition-all duration-300">
+                Login
+            </a>
+        </div>
+    </header>
+
+    <!-- Background + Hero Section -->
+    <main class="relative flex-grow flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <img src="{% static 'images/BG1.png' %}" alt="Landing Background" class="absolute inset-0 w-full h-full object-cover z-0">
+
+
+        <!-- Center Content -->
+        <div class="relative z-10 text-center px-6 animate-[fadeInUp_1s_ease-out]">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 drop-shadow-lg">
+                <span class="text-[#a2d2ff]">Code</span>
+                <span class="text-white">.</span>
+                <span class="text-[#a2d2ff]">Learn</span>
+                <span class="text-white">.</span>
+                <span class="text-[#a2d2ff]">Conquer</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-white max-w-2xl mx-auto mb-8">
+                Redefine your CSE journey with smarter resources.
+            </p>
+            <a href="{% url 'register' %}" class="bg-[#a2d2ff] text-[#001f3f] px-8 py-3 rounded-full text-lg font-bold hover:bg-white transition-all shadow-lg">
+                Register Now
+            </a>
+            
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#001f3f] text-white text-center py-4 shadow-inner z-10 relative">
+        <p>&copy; 2025 CoDemy. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
