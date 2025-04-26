@@ -3,60 +3,153 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CoDemy - Landing</title>
+    <title>CoDemy - Empowering Computer Science Education</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
+            0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(162, 210, 255, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(162, 210, 255, 0.8); }
+        }
+        .navbar-glow {
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+        .text-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8 0%, #a2d2ff 50%, #90ee90 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .feature-card:hover {
+            background: linear-gradient(135deg, rgba(56,189,248,0.05) 0%, rgba(162,210,255,0.1) 50%, rgba(144,238,144,0.05) 100%);
+            transform: translateY(-5px);
+            border-color: #a2d2ff;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(162, 210, 255, 0.2);
+            animation: float 8s linear infinite;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-white text-white">
+<body class="min-h-screen flex flex-col bg-white text-gray-900">
 
-    <!-- Navbar -->
-    <header class="bg-[#001f3f] px-6 py-4 flex justify-between items-center shadow-md z-10 relative">
-        <div class="flex items-center space-x-3">
-            <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-10 w-auto">
-            <span class="text-2xl font-bold">CoDemy</span>
+    <!-- Glowing Navbar -->
+    <header class="bg-[#001f3f] px-6 py-4 flex justify-between items-center sticky top-0 z-50 navbar-glow">
+        <div class="flex items-center space-x-3 group">
+            <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" 
+                 class="h-10 w-auto transition-all duration-500 group-hover:rotate-12 group-hover:drop-shadow-[0_0_15px_#38bdf8]">
+            <span class="text-2xl font-bold text-white text-glow">CoDemy</span>
         </div>
         <div>
-            <a href="{% url 'login' %}" class="bg-white text-[#001f3f] px-5 py-2 rounded-full font-semibold hover:bg-sky-400 hover:text-[#001f3f] transition-all duration-300">
-                Login
+            <a href="{% url 'login' %}" class="relative overflow-hidden bg-white text-[#001f3f] px-5 py-2 rounded-md font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl group">
+                <span class="relative z-10">Sign In</span>
+                <span class="absolute inset-0 bg-gradient-to-r from-[#38bdf8] to-[#a2d2ff] opacity-0 group-hover:opacity-20 transition-opacity duration-500"></span>
             </a>
         </div>
     </header>
 
-    <!-- Background + Hero Section -->
-    <main class="relative flex-grow flex items-center justify-center overflow-hidden">
-        <!-- Background Image -->
-        <img src="{% static 'images/BG1.png' %}" alt="Landing Background" class="absolute inset-0 w-full h-full object-cover z-0">
-
+    <!-- Hero Section -->
+    <main class="relative flex-grow flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#001f3f] to-[#003366]">
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 bg-black/30 z-0"></div>
+        
+        <!-- Floating Particles (Static Implementation) -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle" style="width: 3px; height: 3px; top: 10%; left: 15%; animation-delay: 1s;"></div>
+            <div class="particle" style="width: 4px; height: 4px; top: 20%; left: 30%; animation-delay: 2s;"></div>
+            <div class="particle" style="width: 5px; height: 5px; top: 15%; left: 45%; animation-delay: 3s;"></div>
+            <div class="particle" style="width: 3px; height: 3px; top: 25%; left: 60%; animation-delay: 4s;"></div>
+            <div class="particle" style="width: 4px; height: 4px; top: 18%; left: 75%; animation-delay: 5s;"></div>
+        </div>
 
         <!-- Center Content -->
-        <div class="relative z-10 text-center px-6 animate-[fadeInUp_1s_ease-out]">
-            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 drop-shadow-lg">
-                <span class="text-[#a2d2ff]">Code</span>
-                <span class="text-white">.</span>
-                <span class="text-[#a2d2ff]">Learn</span>
-                <span class="text-white">.</span>
-                <span class="text-[#a2d2ff]">Conquer</span>
-            </h1>
-            <p class="text-lg md:text-2xl text-white max-w-2xl mx-auto mb-8">
-                Redefine your CSE journey with smarter resources.
-            </p>
-            <a href="{% url 'register' %}" class="bg-[#a2d2ff] text-[#001f3f] px-8 py-3 rounded-full text-lg font-bold hover:bg-white transition-all shadow-lg">
-                Register Now
-            </a>
-            
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto py-16">
+            <div class="animate-[fadeInUp_1s_ease-out]">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+                    <span class="gradient-text">Empowering</span> the Next Generation of 
+                    <span class="gradient-text">Computer Scientists</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+                    Discover <span class="font-medium text-[#a2d2ff]">semester-wise materials</span>, 
+                    <span class="font-medium text-[#90ee90]">coding support</span>, and everything you need to 
+                    <span class="font-medium text-[#38bdf8]">excel in your CSE journey</span>.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="{% url 'register' %}" class="relative overflow-hidden bg-[#a2d2ff] text-[#001f3f] px-8 py-3 rounded-md text-lg font-bold hover:bg-white transition-all duration-500 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <span class="relative z-10">Get Started</span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-[#38bdf8] to-[#90ee90] opacity-0 hover:opacity-20 transition-opacity duration-500"></span>
+                    </a>
+                    <a href="#features" class="bg-transparent border-2 border-[#a2d2ff] text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-[#a2d2ff]/10 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        Explore Features
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#001f3f] text-white text-center py-4 shadow-inner z-10 relative">
-        <p>&copy; 2025 CoDemy. All rights reserved.</p>
-    </footer>
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-[#001f3f] mb-12">
+                <span class="gradient-text">Why Choose CoDemy?</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl border border-gray-200 transition-all duration-500 hover:shadow-2xl">
+                    <div class="w-14 h-14 bg-[#a2d2ff]/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-[#001f3f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#001f3f]">Structured Curriculum</h3>
+                    <p class="text-gray-600 text-center">Semester-wise organized materials following university syllabi with practical implementations.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl border border-gray-200 transition-all duration-500 hover:shadow-2xl">
+                    <div class="w-14 h-14 bg-[#a2d2ff]/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-[#001f3f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#001f3f]">Coding Support</h3>
+                    <p class="text-gray-600 text-center">Get help with your coding problems from our community of students and professionals.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-gray-50 p-8 rounded-xl border border-gray-200 transition-all duration-500 hover:shadow-2xl">
+                    <div class="w-14 h-14 bg-[#a2d2ff]/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-[#001f3f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center text-[#001f3f]">Comprehensive Resources</h3>
+                    <p class="text-gray-600 text-center">Lecture notes, lab manuals, reference books, and past papers all in one place.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Simple Footer -->
+    <footer class="bg-[#001f3f] text-white text-center py-6 border-t border-[#003366]">
+        <div class="max-w-6xl mx-auto px-6">
+            <p class="text-sm text-gray-300">© 2025 CoDemy. All rights reserved. <span class="text-[#a2d2ff]">Empowering future developers.</span></p>
+        </div>
+    </footer>
 </body>
 </html>

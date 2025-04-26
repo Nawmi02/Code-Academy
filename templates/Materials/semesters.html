@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 py-16 px-4 sm:px-6 text-white">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header with Gradient Text -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400">
+        Select Semester
+      </h1>
+      <div class="w-20 h-1 bg-gradient-to-r from-green-400 to-blue-500 rounded-full mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {% for semester in semesters %}
+      <!-- Glow Card -->
+      <div class="group relative p-6 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20">
+        <!-- Semester Name with Gradient Text -->
+        <h2 class="text-xl font-semibold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-green-200 to-green-400">
+          {{ semester.name }}
+        </h2>
+        
+        <!-- Gradient Button -->
+        <div class="text-center">
+          <a href="{% url 'materials:sembase' semester.id %}" 
+             class="inline-block px-6 py-2 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 text-white font-medium shadow-md hover:from-green-500 hover:to-blue-600 hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300">
+            Explore Now
+          </a>
+        </div>
+        
+        <!-- Glow Effect (visible on hover) -->
+        <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="absolute -inset-1 bg-gradient-to-r from-green-500/20 to-blue-500/20 blur-md rounded-xl"></div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center py-12">
+        <p class="text-gray-400">No semesters available yet</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+  }
+</style>
+{% endblock %}

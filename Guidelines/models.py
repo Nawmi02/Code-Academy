@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,3 +9,6 @@ class Guideline(models.Model):
 
     def _str_(self):
         return self.topic
+=======
+
+>>>>>>> Stashed changes

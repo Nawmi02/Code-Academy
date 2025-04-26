@@ -2,81 +2,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CoDemy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>CoDemy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
+
 <body class="flex flex-col min-h-screen text-[#001f3f] bg-white">
 
-    <!-- Navbar -->
-    <nav class="bg-[#001f3f] px-6 py-4 flex justify-between items-center shadow-md text-white">
-        <div class="flex items-center space-x-3">
-            <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-10 w-auto">
-            <span class="text-2xl font-bold text-white">CoDemy</span>
-        </div>
-        <div class="hidden md:flex gap-8 text-white text-lg font-medium">
-            <a href="{% url 'home' %}" class="hover:text-gray-300 transition duration-200">Home</a>
-            <a href="{% url 'materials' %}" class="hover:text-gray-300 transition duration-200">Materials</a>
-            <a href="{% url 'courses' %}" class="hover:text-gray-300 transition duration-200">Courses</a>
-            <a href="{% url 'guidelines' %}" class="hover:text-gray-300 transition duration-200">Guidelines</a>
-            <a href="{% url 'notification' %}" class="hover:text-gray-300 transition duration-200">Notifications</a>
-        </div>
-        
-        <!-- Profile Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center space-x-2 focus:outline-none">
-                <img src="{% static 'images/user.png' %}" alt="Profile" class="h-10 w-10 rounded-full border border-white/40">
-                <span class="hidden md:inline text-white font-semibold">My Profile</span>
-                <svg class="w-4 h-4 text-white mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
+  <!-- Navbar -->
+  <nav class="bg-[#001f3f] px-6 py-4 flex justify-between items-center shadow-md text-white">
 
-            <!-- Dropdown Menu -->
-            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition duration-200 z-50">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                <div class="border-t my-1"></div>
-                <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
+    <!-- Logo + Name -->
+    <div class="relative group flex items-center space-x-3 transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_6px_#38bdf8]">
+      <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-10 w-auto">
+      <span class="text-2xl font-bold text-white relative">
+        CoDemy
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_8px_#a2d2ff] transition-all duration-300"></span>
+      </span>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="hidden md:flex gap-8 text-white text-lg font-medium">
+      <a href="{% url 'home' %}" class="relative group hover:scale-110 transition-all duration-300">
+        Home
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300"></span>
+      </a>
+      <a href="{% url 'materials:semester_list' %}" class="relative group hover:scale-110 transition-all duration-300">
+        Materials
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300"></span>
+      </a>
+      <a href="{% url 'courses' %}" class="relative group hover:scale-110 transition-all duration-300">
+        Courses
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300"></span>
+      </a>
+      <a href="{% url 'guidelines' %}" class="relative group hover:scale-110 transition-all duration-300">
+        Guidelines
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300"></span>
+      </a>
+      <a href="{% url 'notification' %}" class="relative group hover:scale-110 transition-all duration-300">
+        Notifications
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300"></span>
+      </a>
+    </div>
+
+    <!-- Profile Dropdown -->
+<div class="relative group transition-all duration-300">
+    <button class="flex items-center space-x-2 focus:outline-none relative group">
+      <img src="{% static 'images/facebook.png' %}" alt="Profile" class="h-10 w-10 rounded-full border-2 border-white/40 group-hover:border-[#a2d2ff] group-hover:shadow-[0_0_10px_#a2d2ff] transition-all duration-300">
+      <span class="hidden md:inline text-white font-semibold relative">
+        My Profile
+        <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#a2d2ff] group-hover:w-full group-hover:shadow-[0_0_8px_#a2d2ff] transition-all duration-300"></span>
+      </span>
+      <svg class="w-4 h-4 text-white mt-1 group-hover:text-[#a2d2ff] group-hover:drop-shadow-[0_0_4px_#a2d2ff] transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  
+    <!-- Dropdown Menu - Glowy Version -->
+    <div class="absolute right-0 mt-2 w-56 bg-[#e0f7ff] rounded-lg shadow-xl hidden group-hover:block z-50 border-2 border-[#a2d2ff]/50 overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_20px_#a2d2ff] group-hover:border-[#a2d2ff]">
+      <div class="relative">
+        <!-- Glow effect behind menu -->
+        <div class="absolute -inset-1 bg-[#a2d2ff] rounded-lg blur opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
+        
+        <!-- Menu items -->
+        <div class="relative bg-[#e0f7ff] rounded-lg">
+          <a href="#" class="block px-4 py-3 text-sm font-medium text-[#001f3f] hover:bg-[#d0f0ff] hover:text-[#0066cc] transition-all duration-200 hover:pl-6 hover:shadow-[inset_4px_0_0_#a2d2ff]">
+            <span class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Profile
+            </span>
+          </a>
+          <a href="#" class="block px-4 py-3 text-sm font-medium text-[#001f3f] hover:bg-[#d0f0ff] hover:text-[#0066cc] transition-all duration-200 hover:pl-6 hover:shadow-[inset_4px_0_0_#a2d2ff]">
+            <span class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Settings
+            </span>
+          </a>
+          <div class="border-t border-[#b0e8ff]/50 mx-3 my-1"></div>
+          <a href="#" class="block px-4 py-3 text-sm font-medium text-red-600 hover:bg-[#fbeaec] transition-all duration-200 hover:pl-6 hover:shadow-[inset_4px_0_0_#f87171]">
+            <span class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </nav>
+  
+ <!-- Page Content Block -->
+<main class="flex-grow">
+    {% block content %}
+    <div class="relative h-screen w-full overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0">
+            <img src="{% static 'images/BG1.png' %}" alt="Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#001f3f] via-[#001f3f80] to-[#001f3f00]"></div>
+            <div class="absolute inset-0 bg-[#001f3f]/40"></div>
+        </div>
+    
+        <!-- Floating Particles - Using CSS variables instead of Django filters -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particles-container">
+                {% for i in "123456789" %}
+                <div class="particle particle-{{ forloop.counter }}"></div>
+                {% endfor %}
             </div>
         </div>
-    </nav>
-
-    <!-- Page Content Block -->
-    <main class="flex-grow">
-        {% block content %}
-        <div class="relative h-[85vh] w-full overflow-hidden">
-            <!-- Background Image -->
-            <div class="absolute inset-0">
-                <img src="{% static 'images/BG1.png' %}" alt="Background" class="w-full h-full object-cover">
-                
-            </div>
-        
-            <!-- Welcome Message -->
-            <div class="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center text-white">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animate-[fadeInUp_1s_ease-out] drop-shadow-xl">
-                    Welcome to <span class="text-[#90ee90]">CoDemy</span>
+    
+        <!-- Welcome Message -->
+        <div class="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
+            <div class="mb-8 animate-[fadeInUp_0.8s_ease-out]">
+                <div class="inline-block p-2 mb-6 rounded-full bg-[#ffffff10] backdrop-blur-sm border border-[#ffffff20]">
+                    <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" class="h-16 w-16 animate-[pulse_4s_ease-in-out_infinite]">
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-[#a2d2ff] to-[#90ee90] drop-shadow-2xl">
+                    Welcome to <span class="text-[#90ee90] animate-[textGlow_2s_ease-in-out_infinite]">CoDemy</span>
                 </h1>
-                <p class="text-lg md:text-2xl max-w-2xl animate-[fadeInUp_1.4s_ease-out] text-gray-200">
-                    Discover semester-wise materials, coding support, and everything you need to ace your CSE journey.
+                <p class="text-xl md:text-3xl max-w-3xl text-gray-200 leading-relaxed">
+                    Discover semester-wise materials, coding support, and everything you need to 
+                    <span class="text-[#a2d2ff] font-medium">ace your CSE journey</span>.
                 </p>
             </div>
+            
+            <!-- Animated CTA Button -->
+            <div class="mt-12 animate-[fadeInUp_1.2s_ease-out]">
+                <a href="#explore" class="
+                    relative inline-block px-8 py-4 font-bold text-white rounded-full
+                    bg-gradient-to-r from-[#38bdf8] to-[#90ee90] hover:from-[#90ee90] hover:to-[#38bdf8]
+                    transition-all duration-500 hover:shadow-[0_0_25px_#38bdf8] hover:scale-105
+                    overflow-hidden group
+                ">
+                    <span class="relative z-10">Get Started</span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-[#90ee90] to-[#38bdf8] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                    <span class="absolute -inset-2 rounded-full border-2 border-white/30 group-hover:border-white/50 transition-all duration-700"></span>
+                </a>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <svg class="w-8 h-8 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
         </div>
-        {% endblock %}
+    </div>
+    {% endblock %}
+</main>
 
-    </main>
+<style>
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+        0% { transform: translateY(0) translateX(0); opacity: 0; }
+        50% { opacity: 0.6; }
+        100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+    }
+    @keyframes textGlow {
+        0%, 100% { text-shadow: 0 0 10px rgba(144, 238, 144, 0.5); }
+        50% { text-shadow: 0 0 20px rgba(144, 238, 144, 0.8); }
+    }
+    
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        animation: float 10s linear infinite;
+    }
+    
+    /* Define individual particle styles */
+    .particle-1 { width: 3px; height: 3px; top: 11%; left: 10%; animation-delay: 1s; background: rgba(162, 210, 255, 0.3); }
+    .particle-2 { width: 4px; height: 4px; top: 12%; left: 20%; animation-delay: 2s; background: rgba(56, 189, 248, 0.3); }
+    .particle-3 { width: 5px; height: 5px; top: 13%; left: 30%; animation-delay: 3s; background: rgba(162, 210, 255, 0.3); }
+    .particle-4 { width: 6px; height: 6px; top: 14%; left: 40%; animation-delay: 4s; background: rgba(56, 189, 248, 0.3); }
+    .particle-5 { width: 7px; height: 7px; top: 15%; left: 50%; animation-delay: 5s; background: rgba(162, 210, 255, 0.3); }
+    .particle-6 { width: 8px; height: 8px; top: 16%; left: 60%; animation-delay: 6s; background: rgba(56, 189, 248, 0.3); }
+    .particle-7 { width: 9px; height: 9px; top: 17%; left: 70%; animation-delay: 7s; background: rgba(162, 210, 255, 0.3); }
+    .particle-8 { width: 10px; height: 10px; top: 18%; left: 80%; animation-delay: 8s; background: rgba(56, 189, 248, 0.3); }
+    .particle-9 { width: 11px; height: 11px; top: 19%; left: 90%; animation-delay: 9s; background: rgba(162, 210, 255, 0.3); }
+</style>
 
-    <!-- Footer -->
-    <footer class="bg-[#001f3f] text-white text-center py-4 shadow-inner">
-        <p>&copy; 2025 CoDemy. All rights reserved.</p>
-    </footer>
+ <!-- Footer -->
+<footer class="bg-gradient-to-b from-[#001a35] to-[#000f1f] text-white px-6 py-16 relative overflow-hidden">
+
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 overflow-hidden opacity-20">
+      <div class="absolute -left-20 -top-20 w-64 h-64 rounded-full bg-[#38bdf8] blur-3xl animate-pulse"></div>
+      <div class="absolute -right-20 -bottom-20 w-72 h-72 rounded-full bg-[#a2d2ff] blur-3xl animate-pulse animation-delay-2000"></div>
+    </div>
+  
+    <!-- Logo + Platform Name with glow effect -->
+    <div class="flex justify-center items-center mb-12 space-x-4 z-10 relative group">
+      <img src="{% static 'images/logo.png' %}" alt="CoDemy Logo" 
+           class="h-16 w-16 transition-all duration-500 group-hover:rotate-12 group-hover:drop-shadow-[0_0_20px_#38bdf8]">
+      <span class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#a2d2ff] to-[#38bdf8]">
+        CoDemy
+      </span>
+    </div>
+  
+    <!-- Developers Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto text-center z-10 relative">
+  
+      <!-- Developer 1 -->
+      <div class="group relative">
+        <div class="absolute -inset-2 bg-gradient-to-r from-[#38bdf8] to-[#a2d2ff] rounded-full blur opacity-0 group-hover:opacity-50 transition-all duration-500"></div>
+        <div class="relative bg-[#001f3f] rounded-2xl p-6 hover:shadow-[0_0_30px_#38bdf833] transition-all duration-500">
+          <div class="relative mx-auto w-32 h-32 mb-6">
+            <img src="{% static 'images/dev1.jpg' %}" alt="Dev 1" 
+                 class="w-full h-full object-cover rounded-full border-4 border-[#38bdf8] shadow-[0_0_25px_#38bdf8] transition-all duration-500 group-hover:shadow-[0_0_40px_#38bdf8] group-hover:scale-105">
+          </div>
+          <h3 class="text-2xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#a2d2ff] to-white">Nashrah Zakir</h3>
+          <p class="text-base text-[#a2d2ff] mb-4">Backend & Frontend Developer</p>
+          <div class="flex justify-center gap-6">
+            <a href="https://www.facebook.com/share/12FMFNYvzEb/" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#3b82f6] transition-all duration-300 hover:shadow-[0_0_15px_#3b82f6] hover:scale-110">
+              <img src="{% static 'images/facebook.png' %}" class="h-5 w-5">
+            </a>
+            <a href="https://github.com/Nawmi02" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#333] transition-all duration-300 hover:shadow-[0_0_15px_#ffffff] hover:scale-110">
+              <img src="{% static 'images/github.png' %}" class="h-5 w-5">
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Developer 2 -->
+      <div class="group relative">
+        <div class="absolute -inset-2 bg-gradient-to-r from-[#a2d2ff] to-[#c084fc] rounded-full blur opacity-0 group-hover:opacity-50 transition-all duration-500"></div>
+        <div class="relative bg-[#001f3f] rounded-2xl p-6 hover:shadow-[0_0_30px_#a2d2ff33] transition-all duration-500">
+          <div class="relative mx-auto w-32 h-32 mb-6">
+            <img src="{% static 'images/dev2.jpg' %}" alt="Dev 2" 
+                 class="w-full h-full object-cover rounded-full border-4 border-[#a2d2ff] shadow-[0_0_25px_#a2d2ff] transition-all duration-500 group-hover:shadow-[0_0_40px_#a2d2ff] group-hover:scale-105">
+          </div>
+          <h3 class="text-2xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#a2d2ff] to-white">Nusrat Jahan Urmi</h3>
+          <p class="text-base text-[#a2d2ff] mb-4">Backend Developer & UI/UX Designer</p>
+          <div class="flex justify-center gap-6">
+            <a href="https://www.facebook.com/share/16Snko8ouE/" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#3b82f6] transition-all duration-300 hover:shadow-[0_0_15px_#3b82f6] hover:scale-110">
+              <img src="{% static 'images/facebook.png' %}" class="h-5 w-5">
+            </a>
+            <a href="https://github.com/nusrat-urmi" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#333] transition-all duration-300 hover:shadow-[0_0_15px_#ffffff] hover:scale-110">
+              <img src="{% static 'images/github.png' %}" class="h-5 w-5">
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Developer 3 -->
+      <div class="group relative">
+        <div class="absolute -inset-2 bg-gradient-to-r from-[#c084fc] to-[#38bdf8] rounded-full blur opacity-0 group-hover:opacity-50 transition-all duration-500"></div>
+        <div class="relative bg-[#001f3f] rounded-2xl p-6 hover:shadow-[0_0_30px_#c084fc33] transition-all duration-500">
+          <div class="relative mx-auto w-32 h-32 mb-6">
+            <img src="{% static 'images/dev3.jpg' %}" alt="Dev 3" 
+                 class="w-full h-full object-cover rounded-full border-4 border-[#c084fc] shadow-[0_0_25px_#c084fc] transition-all duration-500 group-hover:shadow-[0_0_40px_#c084fc] group-hover:scale-105">
+          </div>
+          <h3 class="text-2xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-[#a2d2ff] to-white">Lubna Akter</h3>
+          <p class="text-base text-[#a2d2ff] mb-4">Frontend Developer & UI/UX Designer</p>
+          <div class="flex justify-center gap-6">
+            <a href="https://www.facebook.com/share/18cdXQXVhi/" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#3b82f6] transition-all duration-300 hover:shadow-[0_0_15px_#3b82f6] hover:scale-110">
+              <img src="{% static 'images/facebook.png' %}" class="h-5 w-5">
+            </a>
+            <a href="https://github.com/Lubna219" target="_blank" 
+               class="w-10 h-10 flex items-center justify-center rounded-full bg-[#ffffff10] backdrop-blur-sm hover:bg-[#333] transition-all duration-300 hover:shadow-[0_0_15px_#ffffff] hover:scale-110">
+              <img src="{% static 'images/github.png' %}" class="h-5 w-5">
+            </a>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  
+    <!-- Bottom Line with animated border -->
+    <div class="text-center mt-16 relative z-10">
+      <div class="relative inline-block">
+        <div class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-[#38bdf8] to-transparent opacity-70"></div>
+        <p class="text-sm text-white/70 pb-2 tracking-wider font-light">
+          &copy; 2025 CoDemy. All rights reserved. 
+          <span class="text-[#a2d2ff] font-normal">Crafted with ♥ by Team CoDemy</span>
+        </p>
+      </div>
+    </div>
+  
+  </footer>
+  
+  
 
 </body>
 </html>
