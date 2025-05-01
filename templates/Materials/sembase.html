@@ -1,18 +1,17 @@
-<!-- templates/materials/sembase.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
 <div class="min-h-screen bg-gradient-to-br from-[#001a35] to-[#001a40] flex">
 
-  <!-- Static Sidebar -->
-  <aside class="w-64 fixed h-full bg-white/10 backdrop-blur-lg border-r border-teal-400/30 shadow-xl p-6 flex flex-col">
+  <!-- Static Sidebar - Light Sea Green Theme -->
+  <aside class="w-64 fixed h-full bg-gradient-to-b from-teal-900/30 to-emerald-900/20 backdrop-blur-lg border-r border-teal-300/30 shadow-xl p-6 flex flex-col">
     <!-- Semester Name -->
     <div class="text-center mb-10">
-      <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-teal-400">
+      <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-emerald-300">
         {{ semester.name }}
       </h2>
-      <p class="text-gray-400 text-sm mt-2">
+      <p class="text-teal-100/80 text-sm mt-2">
         {{ books_count }} Books • {{ notes_count }} Notes<br>
         {{ codes_count }} Codes • {{ questions_count }} Questions
       </p>
@@ -20,25 +19,32 @@
 
     <!-- Navigation Links -->
     <nav class="flex flex-col space-y-4">
-      {% with "px-4 py-3 rounded-lg text-center text-white font-semibold transition-all border" as base_class %}
+      {% with "px-4 py-3 rounded-lg text-center font-semibold transition-all border hover:shadow-lg" as base_class %}
         <a href="{% url 'materials:book_list' semester.id %}" 
-           class="{{ base_class }} {% if materials_active == 'books' %}bg-teal-400/20 border-teal-400/50 shadow-md shadow-teal-400/20{% else %}border-teal-400/20 hover:border-teal-400/50 hover:bg-teal-400/10 hover:shadow-md hover:shadow-teal-400/20{% endif %}">
+           class="{{ base_class }} {% if materials_active == 'books' %}bg-teal-400/30 border-teal-300/60 text-white shadow-teal-300/30{% else %}border-teal-300/30 text-teal-100 hover:bg-teal-400/20 hover:border-teal-300/50 hover:text-white{% endif %}">
           Books
         </a>
         <a href="{% url 'materials:note_list' semester.id %}" 
-           class="{{ base_class }} {% if materials_active == 'notes' %}bg-teal-400/20 border-teal-400/50 shadow-md shadow-teal-400/20{% else %}border-teal-400/20 hover:border-teal-400/50 hover:bg-teal-400/10 hover:shadow-md hover:shadow-teal-400/20{% endif %}">
+           class="{{ base_class }} {% if materials_active == 'notes' %}bg-teal-400/30 border-teal-300/60 text-white shadow-teal-300/30{% else %}border-teal-300/30 text-teal-100 hover:bg-teal-400/20 hover:border-teal-300/50 hover:text-white{% endif %}">
           Notes
         </a>
         <a href="{% url 'materials:code_list' semester.id %}" 
-           class="{{ base_class }} {% if materials_active == 'codes' %}bg-teal-400/20 border-teal-400/50 shadow-md shadow-teal-400/20{% else %}border-teal-400/20 hover:border-teal-400/50 hover:bg-teal-400/10 hover:shadow-md hover:shadow-teal-400/20{% endif %}">
+           class="{{ base_class }} {% if materials_active == 'codes' %}bg-teal-400/30 border-teal-300/60 text-white shadow-teal-300/30{% else %}border-teal-300/30 text-teal-100 hover:bg-teal-400/20 hover:border-teal-300/50 hover:text-white{% endif %}">
           Codes
         </a>
         <a href="{% url 'materials:previous_question_list' semester.id %}" 
-           class="{{ base_class }} {% if materials_active == 'questions' %}bg-teal-400/20 border-teal-400/50 shadow-md shadow-teal-400/20{% else %}border-teal-400/20 hover:border-teal-400/50 hover:bg-teal-400/10 hover:shadow-md hover:shadow-teal-400/20{% endif %}">
+           class="{{ base_class }} {% if materials_active == 'questions' %}bg-teal-400/30 border-teal-300/60 text-white shadow-teal-300/30{% else %}border-teal-300/30 text-teal-100 hover:bg-teal-400/20 hover:border-teal-300/50 hover:text-white{% endif %}">
           Previous Questions
         </a>
       {% endwith %}
     </nav>
+
+    <!-- Additional decorative elements -->
+    <div class="mt-auto pt-6 border-t border-teal-300/20">
+      <div class="text-center">
+        <p class="text-teal-100/60 text-xs">Semester Resources</p>
+      </div>
+    </div>
   </aside>
 
   <!-- Main Content -->
@@ -47,41 +53,43 @@
     <!-- Default content when no specific material page is selected -->
     <div class="h-full flex flex-col items-center justify-center p-12 text-center">
       <div class="max-w-2xl mx-auto">
-        <!-- Animated book icon -->
-        <div class="relative mb-8 w-32 h-32 mx-auto">
+        <!-- Animated book icon with circular glow -->
+        <div class="relative mb-8 w-32 h-32 mx-auto group">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="book-float-animation">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-teal-400/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-full text-teal-300/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
+            </div>
           </div>
-          </div>
-          <div class="absolute inset-0 bg-teal-400/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <!-- Circular glow animation -->
+          <div class="absolute inset-0 rounded-full border-2 border-teal-300/20 animate-glow-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="absolute inset-0 rounded-full border-2 border-teal-300/10 animate-glow-pulse-delay opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         </div>
         
         <h1 class="text-4xl font-bold text-white mb-6">
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-blue-300">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-emerald-300">
             Explore Learning Materials
           </span>
         </h1>
         
-        <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+        <p class="text-teal-100/80 text-lg mb-8 leading-relaxed">
           Select a category from the left sidebar to browse through our collection of 
-          <span class="text-teal-300">books</span>, 
-          <span class="text-blue-300">lecture notes</span>, 
-          <span class="text-emerald-300">code examples</span>, and 
-          <span class="text-cyan-300">previous questions</span> 
+          <span class="text-teal-300 font-medium">books</span>, 
+          <span class="text-emerald-300 font-medium">lecture notes</span>, 
+          <span class="text-cyan-300 font-medium">code examples</span>, and 
+          <span class="text-blue-300 font-medium">previous questions</span> 
           for {{ semester.name }}.
         </p>
         
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a href="{% url 'materials:book_list' semester.id %}" class="px-6 py-3 bg-teal-600/30 hover:bg-teal-600/40 border border-teal-400/30 hover:border-teal-400/50 text-white rounded-lg transition-all shadow-md hover:shadow-teal-500/20 flex items-center justify-center">
+          <a href="{% url 'materials:book_list' semester.id %}" class="px-6 py-3 bg-teal-500/30 hover:bg-teal-500/40 border border-teal-300/50 hover:border-teal-300/70 text-white rounded-lg transition-all shadow-md hover:shadow-teal-300/30 flex items-center justify-center hover:-translate-y-0.5">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
             Browse Books
           </a>
-          <a href="{% url 'materials:note_list' semester.id %}" class="px-6 py-3 bg-blue-600/30 hover:bg-blue-600/40 border border-blue-400/30 hover:border-blue-400/50 text-white rounded-lg transition-all shadow-md hover:shadow-blue-500/20 flex items-center justify-center">
+          <a href="{% url 'materials:note_list' semester.id %}" class="px-6 py-3 bg-emerald-500/30 hover:bg-emerald-500/40 border border-emerald-300/50 hover:border-emerald-300/70 text-white rounded-lg transition-all shadow-md hover:shadow-emerald-300/30 flex items-center justify-center hover:-translate-y-0.5">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -92,7 +100,6 @@
     </div>
     {% endblock %}
   </main>
-
 </div>
 
 <style>
@@ -107,9 +114,25 @@
     100% { transform: translateY(0px) rotate(0deg); }
   }
   
-  /* Glow effect for active sidebar items */
-  .glow-active {
-    box-shadow: 0 0 15px rgba(45, 212, 191, 0.5);
+  /* Circular glow animation */
+  @keyframes glow-pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+  
+  @keyframes glow-pulse-delay {
+    0% { transform: scale(0.90); opacity: 0.5; }
+    50% { transform: scale(1.00); opacity: 0.7; }
+    100% { transform: scale(0.90); opacity: 0.5; }
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse-delay {
+    animation: glow-pulse-delay 3s ease-in-out infinite 0.5s;
   }
   
   /* Smooth transitions */

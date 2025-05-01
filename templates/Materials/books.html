@@ -8,7 +8,7 @@
   <!-- Header Section -->
   <div class="pt-12 pb-8 px-8 text-center">
     <h1 class="text-4xl font-bold text-white mb-4">
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-blue-300">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-emerald-300">
         {{ semester.name }} Books
       </span>
     </h1>
@@ -22,7 +22,7 @@
     {% if books %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for book in books %}
-      <div class="relative group overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-teal-400/20 shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-teal-500/20 hover:border-teal-400/40">
+      <div class="relative group overflow-hidden rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-teal-400/30 shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-teal-400/30 hover:border-teal-300/60">
         
         <!-- Book Icon Animation Container -->
         <div class="absolute inset-0 flex items-center justify-center z-0 opacity-20 group-hover:opacity-30 transition-opacity duration-500">
@@ -49,19 +49,19 @@
           {% endif %}
         </div>
         
-        <!-- Glow Effect -->
-        <div class="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-emerald-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <!-- Glow Effect - Enhanced with sea green -->
+        <div class="absolute inset-0 bg-gradient-to-br from-teal-400/10 via-emerald-500/10 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
         <!-- Book Info -->
-        <div class="p-6 relative z-10 bg-gray-900/50 backdrop-blur-sm border-t border-teal-400/10">
+        <div class="p-6 relative z-10 bg-gray-900/70 backdrop-blur-sm border-t border-teal-300/20">
           <div class="flex justify-between items-start mb-2">
             <h3 class="text-xl font-bold text-white truncate">{{ book.title }}</h3>
-            <span class="bg-teal-900/50 text-teal-300 text-xs px-2 py-1 rounded-full">{{ book.subject_code }}</span>
+            <span class="bg-teal-900/70 text-teal-200 text-xs px-2 py-1 rounded-full shadow-md shadow-teal-500/10">{{ book.subject_code }}</span>
           </div>
           <p class="text-gray-400 text-sm mb-4">{{ book.subject }}</p>
           
-          <!-- Download Button -->
-          <a href="{{ book.file.url }}" download class="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-lg hover:from-teal-700 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-teal-500/30">
+          <!-- Download Button - Enhanced with shiny sea green gradient -->
+          <a href="{{ book.file.url }}" download class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 text-white rounded-lg hover:from-teal-600 hover:via-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-teal-400/40 transform hover:-translate-y-0.5">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
@@ -73,7 +73,7 @@
     </div>
     {% else %}
     <div class="text-center py-12">
-      <div class="bg-gray-900/40 backdrop-blur-sm rounded-xl p-12 border border-teal-400/10 shadow-2xl max-w-2xl mx-auto">
+      <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl p-12 border border-teal-300/20 shadow-2xl max-w-2xl mx-auto">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
@@ -88,9 +88,9 @@
 
 <style>
   @keyframes glow {
-    0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
-    100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
+    0% { box-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(20, 184, 166, 0.7); }
+    100% { box-shadow: 0 0 8px rgba(20, 184, 166, 0.4); }
   }
   
   .group:hover {
@@ -98,7 +98,7 @@
     transform: translateY(-5px);
   }
   
-  /* 3D Book Icon Styles */
+  /* Enhanced 3D Book Icon with sea green colors */
   .book-icon-animation {
     perspective: 1000px;
     transform-style: preserve-3d;
@@ -121,10 +121,10 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0f766e, #115e59);
+    background: linear-gradient(135deg, #0d9488, #0f766e);
     border-radius: 2px 6px 6px 2px;
     transform-origin: left center;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 15px rgba(13, 148, 136, 0.3);
   }
   
   .book-icon__spine {
@@ -133,7 +133,7 @@
     top: 0;
     width: 6px;
     height: 100%;
-    background: linear-gradient(to bottom, #0d9488, #134e4a);
+    background: linear-gradient(to bottom, #0d9488, #115e59);
     transform: rotateY(-90deg) translateX(-6px);
     transform-origin: left center;
   }
