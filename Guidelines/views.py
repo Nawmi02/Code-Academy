@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Guideline
 from .forms import * 
 
@@ -12,27 +12,27 @@ def addGuideline(request):
         form = GuidelineForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('guidelines')
     context = {'form':form}
-    return render(request,template_name = 'Materials/addGuideline.html',context=context)
+    return render(request,template_name = 'guidelineForm.html',context=context)
 
 
 def updateGuideline(request,id):
-    guideline = Guideline.objects.get(primary_key=id)
+    guideline = get_object_or_404(Guideline, pk=id)
     form = GuidelineForm(instance=guideline)
     if request.method =='POST':
         form = GuidelineForm(request.POST,request.FILES,instance = guideline)
         if form.is_valid():
             form.save()
-            return redirect('home',id = guideline.id)
+            return redirect('guidelines')
     context = {'form':form}
-    return render(request,template_name = 'Materials/addGuideline.html',context = context)
+    return render(request,template_name = 'guidelineForm.html',context = context)
 
         
 def delete_Guideline(request,id):
-    guideline = Guideline.objects.get(primary_key = id)
+    guideline = get_object_or_404(Guideline, pk=id)
     if request.method =='POST':
         guideline.delete()
-        return redirect('home')
+        return redirect('guidelines')
 
-    return render(request,template_name = 'Materials/delete_Guideline.html')
+    return render(request,template_name = 'guidelines.html')

@@ -5,5 +5,5 @@ class Guideline(models.Model):
     video_link = models.URLField(max_length=500, null=True, blank=True) 
     description = models.TextField(null=True, blank=True)  
 
-    def _str_(self):
-        return self.topic
+    def __str__(self):
+        return self.topic or "Untitled Guideline"

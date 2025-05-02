@@ -4,47 +4,133 @@
 {% block content %}
 <div class="min-h-screen bg-gradient-to-b from-[#001a35] to-[#001f3f] py-16 px-6 text-white">
 
+    <!-- Add Button on Right -->
+    <div class="max-w-6xl mx-auto mb-8 flex justify-end">
+        <a href="{% url 'addGuideline' %}" class="inline-block px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 text-white font-semibold rounded-lg shadow-md hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105 active:scale-95 glow-on-hover">
+            + Add Guideline
+        </a>
+    </div>
+
     <h1 class="text-4xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-purple-500">
         Helpful Guidelines
     </h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-
         {% for guideline in guidelines %}
-        <!-- Card -->
-        <div class="bg-gradient-to-br from-purple-900/30 via-purple-900/20 to-indigo-900/30 rounded-xl p-8 shadow-lg border border-purple-500/20 hover:border-purple-400/40 transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div class="absolute -inset-1 bg-purple-500/10 blur-md group-hover:blur-lg transition-all duration-500"></div>
-            <div class="relative z-10">
+        <div class="relative bg-gradient-to-br from-purple-900/30 via-purple-900/20 to-indigo-900/30 rounded-xl p-8 shadow-lg border border-purple-500/20 hover:border-purple-400/40 transition-all duration-300 group hover:shadow-purple-500/20 hover:glow-card transform hover:-translate-y-1">
 
-                <!-- Topic -->
-                <h2 class="text-2xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-purple-400">
+            <div class="relative z-10">
+                <h2 class="text-2xl font-bold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-purple-400">
                     {{ guideline.topic }}
                 </h2>
 
-                <!-- Watch Video Button -->
                 {% if guideline.video_link %}
-                <div class="flex justify-center">
-                    <a href="{{ guideline.video_link }}" target="_blank" 
-                       class="relative inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold rounded-lg shadow-xl hover:shadow-purple-500/30 transition-all duration-300 group-hover:from-purple-500 group-hover:to-purple-700">
-                        <span class="relative z-10">Watch Video</span>
-                        <span class="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-700 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300"></span>
+                <div class="flex justify-center mb-4">
+                    <a href="{{ guideline.video_link }}" target="_blank"
+                       class="inline-block px-5 py-2 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold rounded-md shadow hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105 active:scale-95 glow-on-hover">
+                        Watch Video
                     </a>
                 </div>
                 {% endif %}
 
-                <!-- Description -->
                 {% if guideline.description %}
-                <p class="mt-6 text-center text-purple-100/80">
+                <p class="text-center text-purple-100/80 mb-6">
                     {{ guideline.description }}
                 </p>
                 {% endif %}
 
+                <!-- Action Buttons -->
+                <div class="flex justify-center gap-4 mt-6">
+                    <a href="{% url 'updateGuideline' guideline.id %}" 
+                       class="px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-700 rounded-md text-white hover:shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 glow-on-hover">
+                        Edit
+                    </a>
+                    <button onclick="openModal('{{ guideline.id }}')"
+                       class="px-4 py-2 bg-gradient-to-r from-red-400 to-red-600 rounded-md text-white hover:shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95 glow-on-hover">
+                        Delete
+                    </button>
+                </div>
             </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="modal-{{ guideline.id }}" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                <div class="bg-gradient-to-r from-purple-100 to-purple-200 text-black rounded-xl shadow-xl p-6 w-[90%] max-w-md transform transition-all duration-300 scale-95 opacity-0 modal-content">
+                    <h3 class="text-lg font-semibold mb-4 text-center text-purple-900">Confirm Deletion?</h3>
+                    <div class="flex justify-center gap-6">
+                        <form method="POST" action="{% url 'deleteGuideline' guideline.id %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                class="px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-md hover:shadow transition-all duration-300 transform hover:scale-105 active:scale-95">
+                                Yes
+                            </button>
+                        </form>
+                        <button onclick="closeModal('{{ guideline.id }}')"
+                            class="px-4 py-2 bg-gradient-to-r from-purple-300 to-purple-500 text-white rounded-md hover:shadow transition-all duration-300 transform hover:scale-105 active:scale-95">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         {% endfor %}
-
     </div>
-
 </div>
+
+<style>
+    .glow-on-hover {
+        box-shadow: 0 0 8px rgba(192, 132, 252, 0);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .glow-on-hover:hover {
+        box-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
+    }
+    
+    .glow-card {
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    
+    .modal-content {
+        animation: modalAppear 0.3s forwards;
+    }
+    
+    @keyframes modalAppear {
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+<!-- Modal JS -->
+<script>
+function openModal(id) {
+    const modal = document.getElementById('modal-' + id);
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.querySelector('.modal-content').style.transform = 'scale(1)';
+        modal.querySelector('.modal-content').style.opacity = '1';
+    }, 10);
+}
+
+function closeModal(id) {
+    const modal = document.getElementById('modal-' + id);
+    modal.querySelector('.modal-content').style.transform = 'scale(0.95)';
+    modal.querySelector('.modal-content').style.opacity = '0';
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+
+// Add click animation to all buttons
+document.querySelectorAll('button, a').forEach(button => {
+    button.addEventListener('click', function() {
+        this.classList.add('active:scale-95');
+        setTimeout(() => {
+            this.classList.remove('active:scale-95');
+        }, 150);
+    });
+});
+</script>
 {% endblock %}

@@ -22,13 +22,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {% for code in codes %}
       <div class="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/90 border border-teal-400/40 shadow-xl backdrop-blur-sm transition-all duration-500 hover:shadow-2xl hover:shadow-teal-500/40 hover:border-teal-300/70">
-        
-        <!-- Glassy Overlay -->
-        <div class="absolute inset-0 bg-teal-500/5 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        
-        <!-- Strong Glow Effect -->
-        <div class="absolute inset-0 rounded-2xl border-2 border-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse-slow"></div>
-        
+
         <!-- Code Content -->
         <div class="p-6 relative z-10">
           <div class="flex justify-between items-start mb-4">
@@ -37,51 +31,22 @@
               {{ code.semester.name }}
             </span>
           </div>
-          
+
           {% if code.description %}
           <p class="text-gray-300 text-sm mb-4">{{ code.description }}</p>
           {% endif %}
-          
-          <!-- Code Block (Preview) - Glassy -->
-          <div class="relative mb-3 glass-code-container">
-            <pre class="bg-gray-800/60 rounded-lg p-4 overflow-x-auto text-sm text-gray-200 font-mono border border-teal-400/20 max-h-40 overflow-y-hidden backdrop-blur-sm"><code>{{ code.get_code_preview }}</code></pre>
-          </div>
-          
-          <!-- Show More Button -->
-          <div class="text-center mb-4">
-            <button onclick="toggleCodeExpansion(this)" 
-                    class="text-teal-300 hover:text-teal-200 text-sm font-medium flex items-center justify-center mx-auto transition-all duration-300">
-              Show Full Code
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-          
-          <!-- Full Code (Hidden Initially) - Glassy -->
-          <div class="hidden full-code-container">
-            <div class="relative mb-4 glass-code-container">
+
+          <!-- Expand/Collapse Code -->
+          <details class="mb-4">
+            <summary class="text-teal-300 hover:text-teal-200 cursor-pointer">View Code</summary>
+            <div class="mt-2 glass-code-container">
               <pre class="bg-gray-800/60 rounded-lg p-4 overflow-x-auto text-sm text-gray-200 font-mono border border-teal-400/20 max-h-96 overflow-y-auto backdrop-blur-sm"><code>{{ code.code_text }}</code></pre>
             </div>
-            
-            <!-- Show Less Button -->
-            <div class="text-center mb-4">
-              <button onclick="toggleCodeExpansion(this)" 
-                      class="text-teal-300 hover:text-teal-200 text-sm font-medium flex items-center justify-center mx-auto transition-all duration-300">
-                Show Less
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform duration-300 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <!-- Copy Button - Glassy with Strong Glow -->
+          </details>
+
+          <!-- Copy Button -->
           <button onclick="copyCode(this, `{{ code.code_text|escapejs }}`)" 
-                  class="w-full px-4 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-teal-500/30 flex items-center justify-center hover:-translate-y-0.5 border border-teal-400/30 hover:border-teal-300/50 backdrop-blur-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-            </svg>
+                  class="w-full px-4 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-teal-500/30 hover:-translate-y-0.5 border border-teal-400/30 hover:border-teal-300/50 backdrop-blur-sm">
             Copy Code
           </button>
         </div>
@@ -104,88 +69,15 @@
 </div>
 
 <script>
-  // Toggle code expansion
-  function toggleCodeExpansion(button) {
-    const card = button.closest('.relative');
-    const fullCodeContainer = card.querySelector('.full-code-container');
-    const showMoreButton = card.querySelector('[onclick="toggleCodeExpansion(this)"]:not(.hidden)');
-    const chevron = showMoreButton.querySelector('svg');
-    
-    fullCodeContainer.classList.toggle('hidden');
-    
-    if (fullCodeContainer.classList.contains('hidden')) {
-      chevron.classList.remove('rotate-180');
-    } else {
-      chevron.classList.add('rotate-180');
-    }
-  }
-  
-  // Copy code to clipboard
-  function copyCode(button, codeText) {
-    navigator.clipboard.writeText(codeText).then(() => {
-      // Change button text temporarily
-      const originalText = button.innerHTML;
-      button.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
-        Copied!
-      `;
-      
-      // Reset button after 2 seconds
-      setTimeout(() => {
-        button.innerHTML = originalText;
-      }, 2000);
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-    });
-  }
+function copyCode(button, codeText) {
+  navigator.clipboard.writeText(codeText).then(() => {
+    const original = button.innerHTML;
+    button.innerHTML = 'Copied!';
+    setTimeout(() => {
+      button.innerHTML = original;
+    }, 2000);
+  });
+}
 </script>
 
-<style>
-  /* Enhanced glow animation */
-  @keyframes pulse-slow {
-    0%, 100% { box-shadow: 0 0 15px rgba(45, 212, 191, 0.5); }
-    50% { box-shadow: 0 0 35px rgba(45, 212, 191, 0.8); }
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse-slow 3s ease-in-out infinite;
-  }
-  
-  /* Glassy effect for code containers */
-  .glass-code-container {
-    background: rgba(31, 41, 55, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(94, 234, 212, 0.2);
-  }
-  
-  /* Enhanced scrollbar styling */
-  pre::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-  }
-  
-  pre::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.05);
-    border-radius: 4px;
-  }
-  
-  pre::-webkit-scrollbar-thumb {
-    background: rgba(45, 212, 191, 0.6);
-    border-radius: 4px;
-    border: 1px solid rgba(45, 212, 191, 0.3);
-  }
-  
-  pre::-webkit-scrollbar-thumb:hover {
-    background: rgba(45, 212, 191, 0.8);
-  }
-  
-  /* Hover effects */
-  .group:hover {
-    transform: translateY(-5px) scale(1.01);
-    transition: all 0.3s ease-out;
-  }
-</style>
 {% endblock %}

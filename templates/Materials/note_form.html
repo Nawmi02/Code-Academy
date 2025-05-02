@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-[#001a35] py-12 px-4 flex justify-center items-center">
+  <div class="w-full max-w-2xl bg-white/5 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-orange-400/30">
+    <h2 class="text-3xl font-bold text-center text-orange-300 mb-8">
+      {% if form.instance.pk %}Update Note{% else %}Add New Note{% endif %}
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
+
+      {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-orange-200 mb-1">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <p class="text-red-400 text-sm mt-1">{{ field.errors|striptags }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+      <div class="flex justify-center pt-4">
+        <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:shadow-orange-400/40 transition-all duration-300 transform hover:-translate-y-0.5">
+          {% if form.instance.pk %}Update{% else %}Add Note{% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  input, textarea {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    color: white;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+  select {
+    background-color: white;
+    color: #001a35;
+    border: 1px solid rgba(255, 165, 0, 0.5);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: rgba(255, 200, 0, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 200, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  select:focus {
+    outline: none;
+    border-color: rgba(255, 200, 0, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 200, 0, 0.3);
+    background-color: white;
+    color: #001a35;
+  }
+</style>
+{% endblock %}

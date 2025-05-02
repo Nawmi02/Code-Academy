@@ -14,60 +14,15 @@
       100% { box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8; }
     }
 
-    @keyframes slideDown {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-      }
-    }
-
     .glow-effect {
       animation: glow 2s ease-in-out infinite alternate;
       border: 2px solid #38bdf8;
-    }
-
-    .popup-slide {
-      animation: slideDown 0.4s ease-out forwards;
-      box-shadow: 0 0 30px white;
     }
 
     .hover-glow:hover {
       box-shadow: 0 0 15px #38bdf8, 0 0 25px #38bdf8;
     }
   </style>
-
-  <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      if (email === "user@codemy.com" && password === "password123") {
-        showSuccessMessage();
-        setTimeout(function () {
-          window.location.href = "{% url 'home' %}";
-        }, 1500);
-      } else {
-        document.getElementById('emailError').innerText = (email !== "user@codemy.com") ? "Wrong email. Try again." : "";
-        document.getElementById('passwordError').innerText = (password !== "password123") ? "Wrong password. Try again." : "";
-      }
-    }
-
-    function showSuccessMessage() {
-      const popup = document.createElement('div');
-      popup.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-white text-[#001f3f] font-bold px-6 py-3 rounded-full popup-slide z-50";
-      popup.innerText = "Logged in Successfully!";
-      document.body.appendChild(popup);
-
-      setTimeout(() => {
-        popup.remove();
-      }, 1500);
-    }
-  </script>
 </head>
 
 <body class="min-h-screen bg-cover bg-center relative text-white" style="background-image: url('{% static 'images/BG1.png' %}');">
@@ -88,24 +43,29 @@
     <div class="bg-white/10 backdrop-blur-lg text-white rounded-2xl p-8 shadow-2xl w-full max-w-md glow-effect">
       <h2 class="text-3xl font-bold mb-8 text-center">Login to CoDemy</h2>
 
-      <form onsubmit="handleLogin(event)" class="space-y-6">
+      <form method="POST" class="space-y-6">
+        {% csrf_token %}
 
         <div>
-          <label for="email" class="block mb-1 text-lg">Email</label>
-          <input id="email" type="email" placeholder="Enter your email" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
-          <p id="emailError" class="text-red-400 text-sm mt-1"></p>
+          <label for="username" class="block mb-1 text-lg">Username</label>
+          <input type="text" name="username" id="username" placeholder="Enter your username"
+                 class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          {% if messages %}
+            {% for message in messages %}
+              <p class="text-red-400 text-sm mt-1">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
         </div>
 
         <div>
           <label for="password" class="block mb-1 text-lg">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
-          <p id="passwordError" class="text-red-400 text-sm mt-1"></p>
+          <input type="password" name="password" id="password" placeholder="Enter your password"
+                 class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
         </div>
 
         <button type="submit" class="w-full bg-[#219ebc] text-white p-3 rounded-full font-bold transition-all hover-glow">
           Submit
         </button>
-
       </form>
 
       <!-- Register Section -->

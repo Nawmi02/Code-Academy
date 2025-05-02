@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Semester, Book, Note, Code, PreviousQuestion
-from .forms import NoteForm,CodeForm
+from .forms import NoteForm
 
 def semester_list(request):
     semesters = Semester.objects.all()
@@ -36,34 +36,52 @@ def note_list(request, semester_id):
     })
 
         
-def note_create(request):
+def note_create(request, semester_id):
+    semester = get_object_or_404(Semester, id=semester_id)
+
     if request.method == "POST":
-        form = NoteForm(request.POST)
+        form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            note = form.save(commit=False)
+            note.semester = semester
+            note.save()
+            return redirect('materials:note_list', semester_id=semester.id)
     else:
-        form = NoteForm()
-    return render(request, 'materials/note_form.html', {'form': form})
+        form = NoteForm(initial={'semester': semester})
+
+    return render(request, 'materials/note_form.html', {
+        'form': form,
+        'semester': semester
+    })
+
+
 
         
-def note_update(request, id):
-    note = get_object_or_404(Note,id=id)
-    if request.method=="POST":
-        form = NoteForm(request.POST,instance=note)
+def note_update(request, semester_id, id):
+    semester = get_object_or_404(Semester, id=semester_id)
+    note = get_object_or_404(Note, id=id, semester=semester)
+
+    if request.method == "POST":
+        form = NoteForm(request.POST, request.FILES, instance=note)
         if form.is_valid():
             form.save()
-            return redirect('home')  
+            return redirect('materials:note_list', semester_id=semester.id)
     else:
         form = NoteForm(instance=note)
-    return render(request, 'materials/note_form.html', {'form': form})
 
-def note_delete(request, id):
-    note = get_object_or_404(Note, id=id)
+    return render(request, 'materials/note_form.html', {
+        'form': form,
+        'semester': semester
+    })
+
+
+def note_delete(request, semester_id, id):
+    note = get_object_or_404(Note, id=id, semester_id=semester_id)
     if request.method == "POST":
         note.delete()
-        return redirect('home')
-    return render(request, 'materials/note_confirm_delete.html', {'note': note})
+        return redirect('materials:note_list', semester_id=semester_id)
+    return render(request, 'materials/notes.html', {'note': note})
+
 
 
 def code_list(request, semester_id):
@@ -74,36 +92,6 @@ def code_list(request, semester_id):
         'codes': codes,
         'materials_active': 'codes'
     })
-
-def code_create(request):
-    if request.method == "POST":
-        form = CodeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = CodeForm()
-    return render(request, 'materials/code_form.html', {'form': form})
-
-def code_update(request, id):
-    code = get_object_or_404(Code,id=id)
-    if request.method=="POST":
-        form = CodeForm(request.POST,instance=code)
-        if form.is_valid():
-            form.save()
-            return redirect('home')  
-    else:
-        form = CodeForm(instance=code)
-    return render(request, 'materials/code_form.html', {'form': form})
-
-def code_delete(request, id):
-    code = get_object_or_404(Code, id=id)
-    if request.method == "POST":
-        code.delete()
-        return redirect('home')
-    return render(request, 'materials/code_confirm_delete.html', {'code': code})
-
-
 
 def previous_question_list(request, semester_id):
     semester = get_object_or_404(Semester, id=semester_id)

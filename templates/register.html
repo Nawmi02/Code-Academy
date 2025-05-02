@@ -18,45 +18,9 @@
       border: 2px solid #38bdf8;
     }
   </style>
-
-  <script>
-    function handleRegister(event) {
-      event.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const semester = document.getElementById('semester').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm_password').value;
-
-      if (password.length < 5) {
-        document.getElementById('errorMessage').innerText = "Password must be at least 5 characters.";
-      } else if (password !== confirmPassword) {
-        document.getElementById('errorMessage').innerText = "Passwords do not match. Please try again.";
-      } else {
-        showSuccessMessage();
-        setTimeout(function() {
-          window.location.href = "{% url 'home' %}";
-        }, 1500);
-      }
-    }
-
-    function showSuccessMessage() {
-      const popup = document.createElement('div');
-      popup.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-[#219ebc] text-white font-bold px-6 py-3 rounded-full shadow-lg z-50 animate-bounce";
-      popup.innerText = "Registered Successfully!";
-      document.body.appendChild(popup);
-
-      setTimeout(() => {
-        popup.remove();
-      }, 1500);
-    }
-  </script>
 </head>
 
 <body class="min-h-screen bg-cover bg-center relative text-white" style="background-image: url('{% static 'images/BG1.png' %}');">
-
-  <!-- Blur Overlay -->
   <div class="absolute inset-0 bg-white/10 backdrop-blur-sm z-0"></div>
 
   <!-- Navbar -->
@@ -67,49 +31,106 @@
     </div>
   </header>
 
-  <!-- Glassy + Glow Register Form -->
+  <!-- Form -->
   <main class="flex-grow flex items-center justify-center relative z-10 px-4 py-10">
     <div class="bg-white/10 backdrop-blur-lg text-white rounded-2xl p-8 shadow-2xl w-full max-w-md glow-effect">
       <h2 class="text-3xl font-bold mb-8 text-center">Create an Account</h2>
 
-      <form onsubmit="handleRegister(event)" class="space-y-6">
+      <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
 
+        <!-- Username -->
         <div>
-          <label for="name" class="block mb-1 text-lg">Name</label>
-          <input id="name" type="text" placeholder="Enter your name" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          <label class="block mb-1 text-lg" for="id_username">Username</label>
+          <input type="text" name="username" id="id_username" value="{{ form.username.value|default_if_none:'' }}"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Enter your username" required>
+          {{ form.username.errors }}
         </div>
 
+        <!-- Email -->
         <div>
-          <label for="semester" class="block mb-1 text-lg">Semester</label>
-          <input id="semester" type="text" placeholder="Enter your semester" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          <label class="block mb-1 text-lg" for="id_email">Email</label>
+          <input type="email" name="email" id="id_email" value="{{ form.email.value|default_if_none:'' }}"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Enter your email" required>
+          {{ form.email.errors }}
         </div>
 
+        <!-- Full Name -->
         <div>
-          <label for="email" class="block mb-1 text-lg">Email</label>
-          <input id="email" type="email" placeholder="Enter your email" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          <label class="block mb-1 text-lg" for="id_full_name">Full Name</label>
+          <input type="text" name="full_name" id="id_full_name" value="{{ form.full_name.value|default_if_none:'' }}"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Enter your full name" required>
+          {{ form.full_name.errors }}
         </div>
 
+        <!-- Semester -->
         <div>
-          <label for="password" class="block mb-1 text-lg">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
-          <p class="text-gray-300 text-sm mt-1">Minimum 5 characters</p>
+          <label class="block mb-1 text-lg" for="id_semester">Semester</label>
+          <input type="text" name="semester" id="id_semester" value="{{ form.semester.value|default_if_none:'' }}"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Enter your semester" required>
+          {{ form.semester.errors }}
         </div>
 
+        <!-- Password -->
         <div>
-          <label for="confirm_password" class="block mb-1 text-lg">Confirm Password</label>
-          <input id="confirm_password" type="password" placeholder="Confirm your password" class="w-full p-3 rounded-lg border border-white/30 bg-transparent text-white placeholder-gray-300 focus:outline-none" required>
+          <label class="block mb-1 text-lg" for="id_password1">Password</label>
+          <input type="password" name="password1" id="id_password1"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Create a password" required>
+          {{ form.password1.errors }}
         </div>
 
-        <!-- Error Message -->
-        <p id="errorMessage" class="text-red-400 text-sm"></p>
+        <!-- Confirm Password -->
+        <div>
+          <label class="block mb-1 text-lg" for="id_password2">Confirm Password</label>
+          <input type="password" name="password2" id="id_password2"
+            class="w-full p-3 rounded-lg bg-transparent border border-sky-400/50 text-white placeholder-sky-300 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow transition-all duration-300"
+            placeholder="Confirm password" required>
+          {{ form.password2.errors }}
+        </div>
 
-        <button type="submit" class="w-full bg-[#219ebc] text-white p-3 rounded-full font-bold hover:bg-black transition-all">
+        <!-- Profile Image -->
+        <div>
+          <label class="block mb-1 text-lg" for="id_profile_image">Profile Image</label>
+          <input type="file" name="profile_image" id="id_profile_image"
+            class="w-full file:bg-sky-500 file:text-white file:rounded-md file:px-4 file:py-2 
+                   bg-transparent text-white border border-sky-400/50 rounded-lg 
+                   focus:outline-none focus:ring-2 focus:ring-sky-500 shadow">
+          {{ form.profile_image.errors }}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full bg-[#219ebc] text-white p-3 rounded-full font-bold hover:bg-black transition-all">
           Register
         </button>
-
       </form>
     </div>
   </main>
 
+  <!-- Success Popup + Redirect Script -->
+  {% if success %}
+  <script>
+    const popup = document.createElement('div');
+    popup.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-white text-[#001f3f] font-bold px-6 py-3 rounded-full shadow-xl z-50";
+    popup.innerText = "Registered Successfully!";
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+      window.location.href = "{% url 'login' %}";
+    }, 1800);
+  </script>
+  {% endif %}
 </body>
 </html>
