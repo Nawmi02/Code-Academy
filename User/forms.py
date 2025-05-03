@@ -28,3 +28,16 @@ class ProfileUpdateForm(forms.ModelForm):
             'facebook',
             'linkedin'
         ]
+#Pass reset
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField()
+    new_password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get('new_password') != cleaned_data.get('confirm_password'):
+            raise forms.ValidationError("Passwords do not match.")
+        return cleaned_data
+
