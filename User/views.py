@@ -3,9 +3,10 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import UserRegistrationForm, ProfileUpdateForm
+from .forms import UserRegistrationForm, ProfileUpdateForm,PasswordResetForm
 from .models import UserProfile
 from django.conf import settings
+from django.contrib.auth.hashers import make_password
 
 # Login View
 def login_view(request):
@@ -78,3 +79,22 @@ def landing_view(request):
 def home_view(request):
     return render(request, 'home.html')
 
+#Pass reset
+def reset_password_view(request):
+    form = PasswordResetForm()
+
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            new_password = form.cleaned_data['new_password']
+
+            try:
+                user = User.objects.get(email=email)
+                user.password = make_password(new_password)
+                user.save()
+                messages.success(request, "Password updated successfully.")
+            except User.DoesNotExist:
+                messages.error(request, "No user found with that email.")
+    
+    return redirect('login') 
