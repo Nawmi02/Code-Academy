@@ -28,14 +28,22 @@ def book_list(request, semester_id):
 
 def note_list(request, semester_id):
     semester = get_object_or_404(Semester, id=semester_id)
-    notes = Note.objects.filter(semester=semester)
+    query = request.GET.get('q')
+    if query:
+        notes = Note.objects.filter(
+            semester=semester,
+            title__icontains=query
+        )
+    else:
+        notes = Note.objects.filter(semester=semester)
+
     return render(request, 'materials/notes.html', {
         'semester': semester,
         'notes': notes,
-        'materials_active': 'notes'
+        'materials_active': 'notes',
+        'query': query
     })
 
-        
 def note_create(request, semester_id):
     semester = get_object_or_404(Semester, id=semester_id)
 
@@ -54,9 +62,6 @@ def note_create(request, semester_id):
         'semester': semester
     })
 
-
-
-        
 def note_update(request, semester_id, id):
     semester = get_object_or_404(Semester, id=semester_id)
     note = get_object_or_404(Note, id=id, semester=semester)
@@ -74,7 +79,6 @@ def note_update(request, semester_id, id):
         'semester': semester
     })
 
-
 def note_delete(request, semester_id, id):
     note = get_object_or_404(Note, id=id, semester_id=semester_id)
     if request.method == "POST":
@@ -82,15 +86,22 @@ def note_delete(request, semester_id, id):
         return redirect('materials:note_list', semester_id=semester_id)
     return render(request, 'materials/notes.html', {'note': note})
 
-
-
 def code_list(request, semester_id):
     semester = get_object_or_404(Semester, id=semester_id)
-    codes = Code.objects.filter(semester=semester)
+    query = request.GET.get('q')
+    if query:
+        codes = Code.objects.filter(
+            semester=semester,
+            title__icontains=query
+        )
+    else:
+        codes = Code.objects.filter(semester=semester)
+
     return render(request, 'materials/codes.html', {
         'semester': semester,
         'codes': codes,
-        'materials_active': 'codes'
+        'materials_active': 'codes',
+        'query': query
     })
 
 def previous_question_list(request, semester_id):

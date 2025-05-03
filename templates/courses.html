@@ -2,20 +2,16 @@
 {% load static %}
 
 {% block content %}
-<!-- Full page wrapper with overlay -->
 <div class="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#001a35] to-[#001f3f]">
-
-  <!-- Main Content -->
   <div class="relative z-10">
 
-    <!-- Section divider -->
     <div class="h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
 
     <div class="py-16">
-
       <div class="max-w-7xl mx-auto px-6">
+
         <!-- Section header -->
-        <div class="text-center mb-16">
+        <div class="text-center mb-10">
           <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#a2d2ff] to-[#90ee90]">
               Featured Courses
@@ -23,34 +19,33 @@
           </h1>
         </div>
 
-        <!-- Courses grid -->
+        <!-- Search Box -->
+        <form method="get" class="max-w-md mx-auto mb-16">
+          <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search courses..."
+            class="w-full px-5 py-3 rounded-full bg-white/5 text-white placeholder-blue-200
+                   border border-blue-300/30 focus:ring-2 focus:ring-blue-400 outline-none
+                   shadow-lg shadow-blue-500/20 backdrop-blur-md transition-all duration-300" />
+        </form>
+
+        <!-- Courses Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
           {% for course in courses %}
-          <!-- Course Card -->
           <div class="group relative bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-[#a2d2ff]/50 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#a2d2ff]/20">
-
-            <!-- Hover glow -->
             <div class="absolute inset-0 bg-gradient-to-br from-[#38bdf8]/10 to-[#90ee90]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
             <div class="p-6 flex flex-col items-center relative z-10">
 
-              <!-- Course Image -->
-              <div class="relative mb-6">
-                {% if course.image %}
-                  <img src="{{ course.image.url }}" alt="{{ course.name }}" class="w-32 h-32 object-cover rounded-full border-4 border-white/20 shadow-lg group-hover:border-[#a2d2ff] transition-all duration-300">
-                {% else %}
-                  <img src="{% static 'images/default-course.png' %}" alt="Default" class="w-32 h-32 object-cover rounded-full border-4 border-white/20 shadow-lg group-hover:border-[#a2d2ff] transition-all duration-300">
-                {% endif %}
-                <div class="absolute -inset-2 rounded-full border-2 border-white/10 group-hover:border-[#a2d2ff]/50 transition-all duration-500"></div>
-              </div>
+              {% if course.image %}
+              <img src="{{ course.image.url }}" alt="{{ course.name }}" class="w-32 h-32 object-cover rounded-full border-4 border-white/20 shadow-lg group-hover:border-[#a2d2ff] transition-all duration-300">
+              {% else %}
+              <img src="{% static 'images/default-course.png' %}" alt="Default" class="w-32 h-32 object-cover rounded-full border-4 border-white/20 shadow-lg group-hover:border-[#a2d2ff] transition-all duration-300">
+              {% endif %}
 
-              <!-- Course Name -->
               <h2 class="text-2xl font-bold mb-4 text-center text-white group-hover:text-[#a2d2ff] transition-colors duration-300">
                 {{ course.name }}
               </h2>
 
-              <!-- Details Dropdown -->
+              <!-- Details -->
               <details class="w-full">
                 <summary class="cursor-pointer flex items-center justify-center space-x-2 text-lg font-medium text-white/90 hover:text-white transition-colors duration-200">
                   <span>Course Details</span>
@@ -60,53 +55,38 @@
                 </summary>
 
                 <div class="mt-6 space-y-3 text-left text-white/80">
-
                   {% if course.academy %}
                   <div class="flex items-start">
-                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M3 7v10a1 1 0 001 1h3m10 0h3a1 1 0 001-1V7m-4 10V5m-6 12V5m-6 12V5"></path>
-                    </svg>
+                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a1 1 0 001 1h3m10 0h3a1 1 0 001-1V7m-4 10V5m-6 12V5m-6 12V5"></path></svg>
                     <p><span class="font-semibold text-white">Institution:</span> {{ course.academy }}</p>
                   </div>
                   {% endif %}
 
                   {% if course.course_topic %}
                   <div class="flex items-start">
-                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 20h9"></path>
-                      <path d="M12 4h9"></path>
-                      <path d="M4 4h1v16H4z"></path>
-                    </svg>
+                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 20h9M12 4h9M4 4h1v16H4z"></path></svg>
                     <p><span class="font-semibold text-white">Topic:</span> {{ course.course_topic }}</p>
                   </div>
                   {% endif %}
 
                   {% if course.course_duration %}
                   <div class="flex items-start">
-                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <p><span class="font-semibold text-white">Duration:</span> {{ course.course_duration }}</p>
                   </div>
                   {% endif %}
 
                   {% if course.course_fee %}
                   <div class="flex items-start">
-                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 8c-1.5 0-3 .5-3 2s1.5 2 3 2 3-.5 3-2-1.5-2-3-2z"></path>
-                      <path d="M12 4v4"></path>
-                      <path d="M12 12v4"></path>
-                    </svg>
+                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.5 0-3 .5-3 2s1.5 2 3 2 3-.5 3-2-1.5-2-3-2zM12 4v4M12 12v4"></path></svg>
                     <p><span class="font-semibold text-white">Course Fee:</span> {{ course.course_fee }}</p>
                   </div>
                   {% endif %}
 
                   {% if course.registration_deadline %}
                   <div class="flex items-start">
-                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                    <p><span class="font-semibold text-white">Registration Deadline:</span> {{ course.registration_deadline }}</p>
+                    <svg class="w-5 h-5 mr-2 text-[#a2d2ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <p><span class="font-semibold text-white">Deadline:</span> {{ course.registration_deadline }}</p>
                   </div>
                   {% endif %}
 
@@ -120,23 +100,18 @@
                     </a>
                   </div>
                   {% endif %}
-
                 </div>
-
               </details>
-
             </div>
           </div>
+          {% empty %}
+          <p class="text-white/70 col-span-full text-center">No courses found.</p>
           {% endfor %}
-
         </div>
       </div>
-
     </div>
 
-    <!-- Section divider -->
     <div class="h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-
   </div>
 </div>
 {% endblock %}

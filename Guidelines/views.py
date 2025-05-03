@@ -2,9 +2,20 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Guideline
 from .forms import * 
 
+from django.db.models import Q
+
 def show_guidelines(request):
-    all_guidelines = Guideline.objects.all()
-    return render(request, 'guidelines.html', {'guidelines': all_guidelines})
+    query = request.GET.get('q')
+    if query:
+        guidelines = Guideline.objects.filter(Q(topic__icontains=query))
+    else:
+        guidelines = Guideline.objects.all()
+
+    return render(request, 'guidelines.html', {
+        'guidelines': guidelines,
+        'query': query
+    })
+
 
 def addGuideline(request):
     form = GuidelineForm()
