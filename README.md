@@ -38,7 +38,7 @@ CoDemy is a Django-based web platform built for Computer Science & Engineering (
 ### 🔹 Materials
 ![Materials](Assets/m1.png)
 ![Materials](Assets/m2.png)
-![Materials](Assets/m3.png)
+![Materials](Assets/mat.png)
 ![Materials](Assets/m4.png)
 ![Materials](Assets/m5.png)
 
