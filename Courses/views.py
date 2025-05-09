@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Course
-from django.db.models import Q  # Import Q for complex queries
+from django.db.models import Q  
 
 def course_list(request):
     query = request.GET.get('q')
