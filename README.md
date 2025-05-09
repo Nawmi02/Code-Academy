@@ -83,6 +83,7 @@ CoDemy is a Django-based web platform built for Computer Science & Engineering (
 
 
 👥 Team Members
+
     Nashrah Zakir – ID: 22201202
 
     Nusrat Jahan Urmi – ID: 22201214
@@ -91,6 +92,7 @@ CoDemy is a Django-based web platform built for Computer Science & Engineering (
 
 
 📌 Future Improvements
+
 🔎 Advanced search filters and tags
 
 📱 Mobile app version
