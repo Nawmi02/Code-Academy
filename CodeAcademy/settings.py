@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os 
-import django_heroku
 import dj_database_url
 from decouple import config
 
@@ -27,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-x=8638)=1zhyv6zz8*s&p!g-gg-hb7uuoxdy26jbg#rx*=b9*m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['CodeAcademy.onrender.com']
 
 
 # Application definition
@@ -141,4 +140,3 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
